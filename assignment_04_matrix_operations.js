@@ -70,3 +70,156 @@
 
 const readlineSync = require('readline-sync');
 
+const readlineSync = require('readline-sync');
+// =============================================================================
+// HELPER FUNCTION — Read a Matrix
+// =============================================================================
+function readMatrix(rows, cols) {
+    let matrix = [];
+    for (let i = 0; i < rows; i++) {
+        let row;
+        while (true) {
+            row = readlineSync.question(`Enter row ${i + 1}: `)
+                .trim()
+                .split(/\s+/)
+                .map(Number);
+            if (row.length === cols && row.every(Number.isFinite)) {
+                break;
+            }
+            console.log(`Please enter exactly ${cols} numbers.`);
+        }
+        matrix.push(row);
+    }
+    return matrix;
+}
+// =============================================================================
+// HELPER FUNCTION — Display a Matrix
+// =============================================================================
+function displayMatrix(matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+        let row = "";
+        for (let j = 0; j < matrix[i].length; j++) {
+            row += matrix[i][j].toString().padStart(6);
+        }
+        console.log(row);
+    }
+}
+// =============================================================================
+// PART A — Transpose a Matrix
+// =============================================================================
+function transposeMatrix(matrix) {
+    let rows = matrix.length;
+    let cols = matrix[0].length;
+    let transpose = [];
+    for (let j = 0; j < cols; j++) {
+        let newRow = [];
+        for (let i = 0; i < rows; i++) {
+            newRow.push(matrix[i][j]);
+        }
+        transpose.push(newRow);
+    }
+    return transpose;
+}
+// =============================================================================
+// PART B — Add Two Matrices
+// =============================================================================
+function addMatrices(matrixA, matrixB) {
+    let rows = matrixA.length;
+    let cols = matrixA[0].length;
+    let result = [];
+    for (let i = 0; i < rows; i++) {
+        let row = [];
+        for (let j = 0; j < cols; j++) {
+            row.push(matrixA[i][j] + matrixB[i][j]);
+        }
+        result.push(row);
+    }
+    return result;
+}
+// =============================================================================
+// PART C — Multiply Two Matrices
+// =============================================================================
+function multiplyMatrices(matrixA, matrixB) {
+    let rowsA = matrixA.length;
+    let colsA = matrixA[0].length;
+    let colsB = matrixB[0].length;
+    let result = [];
+    for (let i = 0; i < rowsA; i++) {
+        let row = [];
+        for (let j = 0; j < colsB; j++) {
+            let sum = 0;
+            for (let k = 0; k < colsA; k++) {
+                sum += matrixA[i][k] * matrixB[k][j];
+            }
+            row.push(sum);
+        }
+        result.push(row);
+    }
+    return result;
+}
+// =============================================================================
+// MAIN PROGRAM
+// =============================================================================
+console.log("==============================================");
+console.log("        MATRIX OPERATIONS PROGRAM");
+console.log("==============================================");
+// -----------------------------------------------------------------------------
+// PART A — Transpose
+// -----------------------------------------------------------------------------
+console.log("\nPART A — TRANSPOSE A MATRIX");
+let rowsA = Number(readlineSync.question("Enter number of rows: "));
+let colsA = Number(readlineSync.question("Enter number of columns: "));
+let matrixA = readMatrix(rowsA, colsA);
+console.log("\nOriginal Matrix:");
+displayMatrix(matrixA);
+let transposed = transposeMatrix(matrixA);
+console.log("\nTransposed Matrix:");
+displayMatrix(transposed);
+// -----------------------------------------------------------------------------
+// PART B — Addition
+// -----------------------------------------------------------------------------
+console.log("\nPART B — ADD TWO MATRICES");
+let rowsB = Number(readlineSync.question("Enter number of rows: "));
+let colsB = Number(readlineSync.question("Enter number of columns: "));
+console.log("\nEnter Matrix A:");
+let addMatrixA = readMatrix(rowsB, colsB);
+console.log("\nEnter Matrix B:");
+let addMatrixB = readMatrix(rowsB, colsB);
+let sumMatrix = addMatrices(addMatrixA, addMatrixB);
+console.log("\nMatrix A:");
+displayMatrix(addMatrixA);
+console.log("\nMatrix B:");
+displayMatrix(addMatrixB);
+console.log("\nA + B:");
+displayMatrix(sumMatrix);
+// -----------------------------------------------------------------------------
+// PART C — Multiplication
+// -----------------------------------------------------------------------------
+console.log("\nPART C — MULTIPLY TWO MATRICES");
+let multiplyRowsA = Number(
+    readlineSync.question("Enter number of rows for Matrix A: ")
+);
+let multiplyColsA = Number(
+    readlineSync.question("Enter number of columns for Matrix A: ")
+);
+console.log("\nEnter Matrix A:");
+let multiplyMatrixA = readMatrix(multiplyRowsA, multiplyColsA);
+let multiplyRowsB = multiplyColsA;
+console.log(
+    `\nMatrix B must have ${multiplyRowsB} rows because Matrix A has ${multiplyColsA} columns.`
+);
+let multiplyColsB = Number(
+    readlineSync.question("Enter number of columns for Matrix B: ")
+);
+console.log("\nEnter Matrix B:");
+let multiplyMatrixB = readMatrix(multiplyRowsB, multiplyColsB);
+let productMatrix = multiplyMatrices(multiplyMatrixA, multiplyMatrixB);
+console.log("\nMatrix A:");
+displayMatrix(multiplyMatrixA);
+console.log("\nMatrix B:");
+displayMatrix(multiplyMatrixB);
+console.log("\nA x B:");
+displayMatrix(productMatrix);
+console.log("\n==============================================");
+console.log("          PROGRAM COMPLETED");
+console.log("==============================================");
