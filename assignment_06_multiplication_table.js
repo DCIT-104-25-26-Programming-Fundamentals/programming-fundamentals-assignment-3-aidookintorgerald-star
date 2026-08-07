@@ -60,3 +60,52 @@
 // =============================================================================
 
 
+const readline = require("readline-sync");
+
+// =============================================================================
+// PART A — Single Table
+// =============================================================================
+
+function singleTable(number) {
+    console.log(`Multiplication Table for ${number}:`);
+
+    for (let i = 1; i <= 12; i++) {
+        console.log(`${number}  x  ${i}  =  ${number * i}`);
+    }
+}
+
+// =============================================================================
+// PART B — Tables from 1 to N
+// =============================================================================
+
+function tablesFrom1ToN(n) {
+    for (let number = 1; number <= n; number++) {
+        console.log(`Multiplication Table for ${number}:`);
+
+        for (let i = 1; i <= 12; i++) {
+            console.log(`${number}  x  ${i}  =  ${number * i}`);
+        }
+
+        if (number < n) {
+            console.log("---------------------------");
+        }
+    }
+}
+
+// =============================================================================
+// MAIN PROGRAM
+// =============================================================================
+
+let n = readline.questionInt("Enter a positive integer: ");
+
+if (n <= 0) {
+    console.log("Error: Please enter a positive integer.");
+} else {
+    // Part A
+    singleTable(n);
+
+    console.log("\n============================\n");
+
+    // Part B
+    tablesFrom1ToN(n);
+}
