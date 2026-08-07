@@ -75,3 +75,151 @@
 // =============================================================================
 
 
+// =============================================================================
+// PROGRAMMING FUNDAMENTALS — Assignment 8
+// =============================================================================
+//
+// TASK: Student Record Management System
+// =============================================================================
+
+const readline = require("readline-sync");
+
+// Store all student records in an array
+let students = [];
+
+// =============================================================================
+// 1. ADD A STUDENT
+// =============================================================================
+
+function addStudent() {
+    let name = readline.question("Student name: ");
+    let id = readline.questionInt("Student ID: ");
+
+    let numberOfScores = readline.questionInt("How many scores? ");
+
+    let scores = [];
+
+    for (let i = 0; i < numberOfScores; i++) {
+        let score = readline.questionFloat(`Enter score ${i + 1}: `);
+        scores.push(score);
+    }
+
+    let student = {
+        name: name,
+        id: id,
+        scores: scores
+    };
+
+    students.push(student);
+
+    console.log(`Student "${name}" added successfully.`);
+}
+
+// =============================================================================
+// 2. DISPLAY ALL STUDENTS
+// =============================================================================
+
+function displayAllStudents() {
+    if (students.length === 0) {
+        console.log("No students have been added yet.");
+        return;
+    }
+
+    console.log("\nStudent Records:");
+    console.log("---------------------------------------------");
+
+    for (let i = 0; i < students.length; i++) {
+        let student = students[i];
+
+        let total = 0;
+
+        for (let j = 0; j < student.scores.length; j++) {
+            total += student.scores[j];
+        }
+
+        let average = total / student.scores.length;
+
+        console.log(`Name: ${student.name}`);
+        console.log(`ID: ${student.id}`);
+        console.log(`Scores: ${student.scores.join(", ")}`);
+        console.log(`Average: ${average.toFixed(2)}`);
+        console.log("---------------------------------------------");
+    }
+}
+
+// =============================================================================
+// 3. CALCULATE AVERAGE SCORE FOR A SPECIFIC STUDENT
+// =============================================================================
+
+function calculateAverage() {
+    let id = readline.questionInt("Enter student ID: ");
+
+    let student = null;
+
+    for (let i = 0; i < students.length; i++) {
+        if (students[i].id === id) {
+            student = students[i];
+            break;
+        }
+    }
+
+    if (student === null) {
+        console.log("Error: Student ID not found.");
+        return;
+    }
+
+    let total = 0;
+
+    for (let i = 0; i < student.scores.length; i++) {
+        total += student.scores[i];
+    }
+
+    let average = total / student.scores.length;
+
+    console.log(`${student.name}'s average score: ${average.toFixed(2)}`);
+}
+
+// =============================================================================
+// 4. MAIN MENU
+// =============================================================================
+
+function showMenu() {
+    let choice;
+
+    do {
+        console.log("\n================================");
+        console.log("   STUDENT RECORD SYSTEM MENU");
+        console.log("================================");
+        console.log("1. Add student");
+        console.log("2. Display all students");
+        console.log("3. Calculate average score");
+        console.log("4. Quit");
+
+        choice = readline.questionInt("Enter your choice (1-4): ");
+
+        switch (choice) {
+            case 1:
+                addStudent();
+                break;
+
+            case 2:
+                displayAllStudents();
+                break;
+
+            case 3:
+                calculateAverage();
+                break;
+
+            case 4:
+                console.log("Goodbye!");
+                break;
+
+            default:
+                console.log("Error: Please enter a number between 1 and 4.");
+        }
+
+    } while (choice !== 4);
+}
+
+// Start the program
+showMenu();
