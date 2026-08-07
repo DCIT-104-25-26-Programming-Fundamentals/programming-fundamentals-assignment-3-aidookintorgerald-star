@@ -55,3 +55,98 @@
 // =============================================================================
 
 
+// =============================================================================
+// PROGRAMMING FUNDAMENTALS — Assignment 5
+// =============================================================================
+// TASK: Fibonacci Sequence Generator
+// =============================================================================
+
+const readlineSync = require('readline-sync');
+
+// =============================================================================
+// PART A — Print the First N Terms
+// =============================================================================
+
+function printFibonacci(n) {
+    if (!Number.isInteger(n) || n <= 0) {
+        console.log("Error: N must be a positive integer.");
+        return;
+    }
+
+    let first = 0;
+    let second = 1;
+    let sequence = "";
+
+    for (let i = 0; i < n; i++) {
+        sequence += first + " ";
+
+        let next = first + second;
+        first = second;
+        second = next;
+    }
+
+    console.log("Fibonacci sequence:", sequence.trim());
+}
+
+// =============================================================================
+// PART B — Check if a Number Belongs to the Sequence
+// =============================================================================
+
+function isFibonacci(number) {
+    if (!Number.isInteger(number) || number < 0) {
+        console.log(number + " is NOT a Fibonacci number.");
+        return;
+    }
+
+    let first = 0;
+    let second = 1;
+
+    while (first <= number) {
+        if (first === number) {
+            console.log(number + " is a Fibonacci number.");
+            return;
+        }
+
+        let next = first + second;
+        first = second;
+        second = next;
+    }
+
+    console.log(number + " is NOT a Fibonacci number.");
+}
+
+// =============================================================================
+// MAIN PROGRAM
+// =============================================================================
+
+console.log("======================================");
+console.log("     FIBONACCI SEQUENCE GENERATOR");
+console.log("======================================");
+
+// -----------------------------------------------------------------------------
+// PART A
+// -----------------------------------------------------------------------------
+
+console.log("\nPART A — PRINT FIRST N TERMS");
+
+let n = Number(
+    readlineSync.question("How many terms? ")
+);
+
+printFibonacci(n);
+
+// -----------------------------------------------------------------------------
+// PART B
+// -----------------------------------------------------------------------------
+
+console.log("\nPART B — CHECK FIBONACCI NUMBER");
+
+let number = Number(
+    readlineSync.question("Enter a number to check: ")
+);
+
+isFibonacci(number);
+
+console.log("\n======================================");
+console.log("          PROGRAM COMPLETED");
+console.log("======================================");
